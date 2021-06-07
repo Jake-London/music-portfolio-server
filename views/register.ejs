@@ -1,0 +1,11 @@
+<form id="register-form" action="/admin/register" method="POST">
+    <div>
+        <h1>Register</h1>
+        <%- include('./partials/messages'); %>
+        <input type="text" name="username" id="username" autocomplete="off" placeholder="Username">
+        <input type="password" name="password" id="password" autocomplete="off" placeholder="Password">
+        <div class="submit-container">
+            <input type="submit" id="submit">
+        </div>
+    </div>
+</form>

@@ -1,0 +1,106 @@
+
+<div class="dashboard-container">
+    <div class="dashboard-content-container">
+        <div class="forms-container">
+            <div class="upload-song-container">
+                <h1>Song Upload</h1>
+            
+                <form class="dashboard-form" id="upload-song-form" action="/admin/upload" method="POST" enctype="multipart/form-data">
+                    
+                    <%- include('./partials/messages'); %> 
+                    <div>
+                        <div class="cover-art">
+                            <div class="preview-container">
+                                <span class="preview-text">Preview</span>
+                                <img src="">
+                            </div>
+                            <h5>Cover Art</h5>
+                            <input type="file" id="upload-art" name="cover">
+                        </div>
+                        <div class="song-details">
+                            <h5>Song Details</h5>
+                            <input type="text" class="dashboard-input" id="upload-name" name="songName" placeholder="Song Name">
+                            <input type="text" class="dashboard-input" id="upload-bpm" name="songBpm" placeholder="BPM">
+                            <input type="text" class="dashboard-input" id="upload-duration" name="songDuration" placeholder="Duration">
+                            <h5>MP3 File</h5>
+                            <input type="file" id="upload-mp3" name="song" >
+                        </div>
+                    </div>
+                    <div class="song-upload">
+                        <input type="submit" class="upload-btn" id="upload-submit" value="Upload">
+                    </div>
+                </form>
+            </div>
+            <div class="upload-disc-container">
+                <h1>Discography Upload</h1>
+                <form class="dashboard-form" id="upload-disc-form" action="/admin/upload/disc" method="POST" enctype="multipart/form-data">
+                    
+                    <%- include('./partials/disc'); %> 
+                    <div>
+                        <div class="cover-art">
+                            <div class="preview-container">
+                                <span class="preview-text">Preview</span>
+                                <img src="">
+                            </div>
+                            <h5>Cover Art</h5>
+                            <input type="file" id="disc-upload-art" name="cover">
+                        </div>
+                        <div class="song-details">
+                            <h5>Song Details</h5>
+                            <input type="text" class="dashboard-input" id="disc-upload-name" name="discName" placeholder="Song Name">
+                            <input type="text" class="dashboard-input" id="disc-upload-bpm" name="discSpotify" placeholder="Spotify Embed Code">
+                            
+                        </div>
+                    </div>
+                    <div class="song-upload">
+                        <input type="submit" class="upload-btn" id="disc-upload-submit" value="Upload">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div class="dashboard-content-container">
+        <h1>Edit/Remove Songs</h1>
+        <div class="db-btn-container">
+            <button class="green-btn">Download All</button>
+            <button class="red-btn">Delete All</button>
+        </div>
+        <div class="edit-list-container">
+            <div class="list-container">
+                <ul class="song-list">
+                    <li class="song-item">
+                        <span class="art"></span>
+                        <span class="title">Title</span>
+                        <span class="bpm">BPM</span>
+                        <span class="length">Length</span>
+                        
+                    </li>
+                    
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="dashboard-content-container">
+        <h1>Edit/Remove Discographies</h1>
+        <div class="discography-container">
+            <ul>
+                <% discographyList.forEach(disc => { %>
+                    <li class="disc-item">
+                        <img src="<%= disc.discCoverPath %> " alt="">
+                        <div class="disc-admin">
+                            <p><%= disc.discName %> </p>
+                            <span class="delete-disc" data-id="<%= disc._id %>">
+                                <i class="fas fa-trash-alt"></i>
+                            </span>
+                        </div>    
+                    </li>
+                <% }) %>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script type="module" src="/js/admin.js"></script>

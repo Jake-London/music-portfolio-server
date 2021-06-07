@@ -1,0 +1,54 @@
+<% if (typeof errors != 'undefined') { %>
+    <% errors.forEach(err => { %>
+        <div class="error-flash">
+            <p><%= err.msg %> </p>
+        </div>
+    <% }); %>
+<% } %>
+
+<% if (error != '') { %>
+    <div class="error-flash">
+        <p><%= error %> </p>
+    </div>
+<% } %>
+
+<% if (loginError != '') { %>
+
+    <div class="error-flash">
+        <p><%= loginError %> </p>
+    </div>
+
+<% } %>
+
+<% if (loginSuccess != '') { %>
+
+    <div class="success-flash">
+        <p><%= loginSuccess %> </p>
+    </div>
+
+<% } %>
+
+<% if (uploadError != '') { %>
+
+    <div class="error-flash">
+        <p><%= uploadError %> </p>
+    </div>
+
+<% } %>
+
+
+<% if (uploadSuccess != '') { %>
+
+    <div class="success-flash">
+        <p><%= uploadSuccess %> </p>
+    </div>
+
+<% } %>
+
+<% if (contactSuccess != '') { %>
+
+    <div class="success-flash">
+        <p><%= contactSuccess %> </p>
+    </div>
+
+<% } %>

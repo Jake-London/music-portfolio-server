@@ -1,0 +1,11 @@
+<form id="login-form" method="POST" action="/admin/login">
+    <div>
+        <h1>Login</h1>
+        <%- include('./partials/messages'); %>
+        <input type="text" id="username" name="username" autocomplete="off" placeholder="Username">
+        <input type="password" id="password" name="password" autocomplete="off" placeholder="Password">
+        <div class="submit-container">
+            <input type="submit" id="submit">
+        </div>
+    </div>
+</form>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sixon Music 
+    <% if (typeof title != 'undefined') { %>
+        <%= title %>
+    <% } %> 
+    </title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap" rel="stylesheet">
+    
+</head>
+<body>
+    <div>
+        <nav class="nav-container">
+            <div>
+                <div class="nav-logo-container">
+                    <!-- <img src="img/Noel_Logo.png" alt=""> -->
+                    <a href="#">SIXON</a>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="/about" class="link">About</a></li>
+                    <li><a href="/" class="link">Tracks</a></li>
+                    <li><a href="/contact" class="link">Contact</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+    <div class="ejs-container">
+        <%- body %>
+    </div>
+
+    <div class="footer-container">
+        <div class="content-container">
+            <div class="footer">
+                <div class="footer-1">
+                    <!-- <div class="footer-title">
+                        <h1>SIXON</h1>
+                    </div> -->
+                    <div class="footer-socials">
+                            <a href=""><i class="fab fa-instagram"></i></a>
+                            <a href=""><i class="fab fa-soundcloud"></i></a>
+                            <a href=""><i class="fab fa-youtube"></i></a>
+                        </div>
+                        <div class="footer-nav">
+                            <a href="">Tracks</a>
+                            <a href="">About</a>
+                            <a href="">Contact</a>
+                        </div>
+                        <div class="footer-copyright">
+                            <p>&copy; 2021 Sixon Music</p>
+                        </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <script src="https://kit.fontawesome.com/c394d94e13.js" crossorigin="anonymous"></script>
+    <script src="/js/songCreator.js"></script>
+    <script src="/js/main.js"></script>
+    
+</body>
+</html>

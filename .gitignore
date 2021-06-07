@@ -1,0 +1,9 @@
+/node_modules
+/public/tracks
+/public/templates
+/public/discography
+/public/*.txt
+/public/img/*
+
+!/public/img/bg.gif
+
