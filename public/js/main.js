@@ -19,6 +19,10 @@ document.body.appendChild(current_track);
 
 let song_list = [];
 
+
+let pageNum = 0;
+let end = false;
+
 let getSongFromList = (title) => {
 
     for (let i = 0; i < song_list.length; i++) {
@@ -244,52 +248,65 @@ let seekUpdate = () => {
     }
 }
 
-let testFetch = async () => {
-    const response = await fetch('/tracklist');
-    const trackList = await response.json();
+let testFetch = async (pageNum) => {
+    console.log(`End reached: ${end}`);
+    if (!end) {
+        const response = await fetch('/tracklist/' + pageNum);
+        console.log(response);
+        const trackList = await response.json();
 
-    song_list = trackList;
+        if (!trackList.err) {
+            song_list = trackList;
+
+            let ul = document.querySelector('.song-list');
+
+            for (let i = 0; i < song_list.length; i++) {
+                let song = song_list[i];
+
+                let li = createListItem(song.coverPath, song.songName, song.songBpm, song.songDuration, 'home', '', '');
+                
+                let playButton = li.querySelector('.play-song');
+                playButton.onclick = function() {newSong(this);};
+
+                
+                ul.appendChild(li);
+            }
+
+            let discography_list = document.querySelectorAll('.disc-item img');
+
+            if (discography_list) {
+                console.log(discography_list);
+
+                for (let i = 0; i < discography_list.length; i++) {
+                    /* console.log(discography_list[i].offsetWidth); */
+
+                    discography_list[i].parentNode.style.height = discography_list[i].offsetWidth + 'px';
+
+                    if ((i + 1) % 5 == 0) {
+                        console.log('here');
+                        console.log(discography_list[i]);
+                        discography_list[i].parentNode.style.paddingRight = "0px";
+                    }
+
+                }
+            }
+        } else {
+            end = true;
+        }
+    }
+    
 }
 console.log(location.href);
 
 document.addEventListener('DOMContentLoaded', async function(event) {
     if (location.href.split(location.host)[1] === '/') {
-        await testFetch();
+        await testFetch(pageNum);
+        pageNum++;
+        
     
         console.log(song_list);
 
-        let ul = document.querySelector('.song-list');
-
-        for (let i = 0; i < song_list.length; i++) {
-            let song = song_list[i];
-
-            let li = createListItem(song.coverPath, song.songName, song.songBpm, song.songDuration, 'home', '', '');
-            
-            let playButton = li.querySelector('.play-song');
-            playButton.onclick = function() {newSong(this);};
-
-            
-            ul.appendChild(li);
-        }
-
-        let discography_list = document.querySelectorAll('.disc-item img');
-
-        if (discography_list) {
-            console.log(discography_list);
-
-            for (let i = 0; i < discography_list.length; i++) {
-                /* console.log(discography_list[i].offsetWidth); */
-
-                discography_list[i].parentNode.style.height = discography_list[i].offsetWidth + 'px';
-
-                if ((i + 1) % 5 == 0) {
-                    console.log('here');
-                    console.log(discography_list[i]);
-                    discography_list[i].parentNode.style.paddingRight = "0px";
-                }
-
-            }
-        }
+        
 
         document.querySelector('audio').addEventListener('ended', function() {
             console.log('Song finished');
@@ -298,3 +315,26 @@ document.addEventListener('DOMContentLoaded', async function(event) {
     }
     
 });
+
+window.onscroll = infiniteScroll;
+
+    // This variable is used to remember if the function was executed.
+    var isExecuted = false;
+
+    function infiniteScroll() {
+        // Inside the "if" statement the "isExecuted" variable is negated to allow initial code execution.
+        if (window.scrollY > (document.body.offsetHeight - window.outerHeight) && !isExecuted) {
+            // Set "isExecuted" to "true" to prevent further execution
+            isExecuted = true;
+
+            // Your code goes here
+            console.log("Working...");
+            testFetch(pageNum);
+            pageNum++;
+
+            // After 1 second the "isExecuted" will be set to "false" to allow the code inside the "if" statement to be executed again
+            setTimeout(() => {
+                isExecuted = false;
+            }, 700);
+        }
+    }

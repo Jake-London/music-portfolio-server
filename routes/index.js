@@ -5,7 +5,10 @@ const { ensureAuthenticated } = require('../config/auth');
 const Track = require('../models/Track');
 const Discography = require('../models/Discography');
 
-router.get('/', (req, res) => res.render('home'));
+router.get('/', async (req, res) => {
+    
+    
+    res.render('home')});
 
 router.get('/admin', ensureAuthenticated, async (req, res) => {
     console.log(req.user);
@@ -15,15 +18,23 @@ router.get('/admin', ensureAuthenticated, async (req, res) => {
     res.render('dashboard', {user: req.user, discographyList});
 });
 
-router.get('/tracklist', async (req, res) => {
+router.get('/tracklist/:num', async (req, res) => {
     
-    const trackList = await Track.find().sort({_id:-1}).limit(25);
+    const page = req.params.num;
+    const index = page * 25;
 
-    // console.log(trackList);
+    console.log(page, index);
 
-    res.json(trackList);
+    await Track.countDocuments({}, async function(err, count) {
+        console.log(count);
 
-
+        if (index < count) {
+            const trackList = await Track.find().sort({_id:-1}).limit(25).skip(index);
+            res.json(trackList);
+        } else {
+            res.json({err: "No more songs"});
+        }
+    })
 });
 
 router.get('/about', async (req, res) => {
@@ -36,13 +47,13 @@ router.get('/about', async (req, res) => {
     res.render('about', {discographyList});
 });
 
-router.get('/contact', (req, res) => res.render('contact'));
+router.get('/pricing', (req, res) => res.render('pricing'));
 
 router.post('/contact', (req, res) => {
     console.log(req.body);
 
     req.flash('contactSuccess', 'Message submitted successfully');
-    res.redirect('/contact');
+    res.redirect('/pricing');
 })
 
 

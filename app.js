@@ -56,7 +56,6 @@ app.use('/', require('./routes/index'));
 app.use('/admin', require('./routes/admin'));
 
 
-
 const PORT = process.env.PORT || 5001;
 
 
