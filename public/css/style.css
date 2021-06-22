@@ -8,8 +8,6 @@ html {
     font-size: 16px;
 }
 
-
-
 .nav-container {
     height: 6.25rem; /* must be adjusted for bigger screens */
     background: white;
@@ -113,16 +111,20 @@ html {
     
 }
 
-.search-form > div {
+.search-form > .search-icon-container {
     background: #fff;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding:0px 10px;
+    padding:0px 15px;
     background: rgb(255, 255, 255);
 }
 
-.search-form > input {
+.search-input-container {
+    width: 100%;
+}
+
+.search-input-container > input {
     width: 100%;
     padding: 0px 10px;
     font-size: 1.2rem;
@@ -221,10 +223,14 @@ html {
     font-weight: 700;
 }
 
-.play-song, .delete-song, .download-song {
+.play-song, .delete-song, .download-song, .sold-song {
     color: #000;
     margin-right: 10px;
     cursor: pointer;
+}
+
+.sold-dashboard {
+    color: rgb(26, 199, 41);
 }
 
 .song-item:not(:first-child):hover {
@@ -254,7 +260,7 @@ html {
 }
 
 .player-info {
-    flex: 1;
+    flex: 2;
     display: flex;
     height: 100%;
     
@@ -309,7 +315,7 @@ html {
 }
 
 .player-volume {
-    flex: 1;
+    flex: 2;
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -529,6 +535,17 @@ input[type=range]:focus::-webkit-slider-runnable-track {
 
 .dashboard-form > div {
     display: flex;
+}
+
+.dashboard-checkbox {
+    padding: 1rem 0rem;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+}
+
+.dashboard-checkbox label {
+    padding-left: 0.3rem;
 }
 
 .preview-container {
@@ -873,6 +890,7 @@ input[type=range]:focus::-webkit-slider-runnable-track {
 }
 
 .label-container {
+    width: 100%;
     display: flex;
     flex-direction: column;
     padding-bottom: 1rem;
@@ -894,7 +912,7 @@ input[type=range]:focus::-webkit-slider-runnable-track {
     width: 50%;
 }
 
-label {
+.label-container label {
     padding-bottom: 10px;
 }
 
@@ -903,6 +921,11 @@ textarea {
 }
 
 .label-container > input {}
+
+.label-container > textarea {
+    max-width: 100%;
+    box-sizing: border-box;
+}
 
 .label-container > input, .label-container > textarea {
     padding: 10px;
@@ -917,11 +940,36 @@ textarea {
 }
 
 .pricing-container {
-    padding: 5rem 0px;
+    padding-bottom: 6rem;
+    padding-top: 3rem;
+}
+
+.pricing-heading {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 4rem;
+}
+
+.pricing-heading > h3 {
+    font-size: 1.8rem;
+    letter-spacing: 0.1rem;
+}
+
+.pricing-heading > p {
+    color: rgba(0, 0, 0, 0.7);
+    font-weight: 800;
+    font-size: 0.9rem;
+    padding-top: 0.2rem;
 }
 
 .tier-list {
     display: flex;
+}
+
+.tier-item {
+    padding: 0rem 0rem;
 }
 
 .tier-title {
@@ -945,6 +993,7 @@ textarea {
 
 .tier-benefit {
     text-align: center;
+    padding-bottom: 0.2rem;
 }
 
 .full-container {
@@ -981,6 +1030,152 @@ textarea {
     align-items: center;
 }
 
+
+.track-container {
+    margin-top: 6.25rem;
+    
+    width: 100%;
+    height: calc(100vh - 6.25rem);
+    min-height: 650px;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.track-sub-cont {
+    box-shadow: 0px 0px 104px -23px rgba(0,0,0,0.3);
+    box-sizing: border-box;
+    padding: 0rem 5rem;
+    width: 55%;
+    height: 100%;
+}
+
+.track-img-container {
+    height: 18rem;
+    width: 18rem;
+}
+
+.track-img-container img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.track {
+    padding-top: 5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.track-info-1 {
+    display: flex;
+}
+
+.track-heading {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding-bottom: 1rem;
+    padding-left: 2.5rem;
+    flex: 1;
+}
+
+.track-title {
+    font-size: 2.5rem;
+}
+
+.track-artist {
+    font-size: 1.5rem;
+}
+
+.track-play {
+    padding-top: 1rem;
+    font-size: 2.5rem;
+}
+
+.track-info-2 {
+    display: flex;
+}
+
+.empty-cont {
+    width: 20.5rem;
+}
+
+.track-details {
+    display: flex;
+    box-sizing: border-box;
+    width: 100%;
+    padding-top: 2rem;
+}
+
+.track-details > div:first-child {
+    padding-left: 20.5rem;
+}
+
+.track-details > div {
+    flex: 1;
+    margin-right: 1.5rem;
+}
+
+.details-heading {
+    color: rgba(0, 0, 0, 0.4);
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+    letter-spacing: 0.1rem;
+}
+
+.details {
+    padding-top: 0.5rem;
+}
+
+.sold {
+    color: rgb(175, 44, 44);
+}
+
+.track-play .fa-play:hover, .track-play .fa-pause:hover {
+    cursor: pointer;
+}
+
+
+/* 404 CSS */
+
+.container-404 {
+    margin-top: 6.25rem;
+    height: calc(100vh - 6.25rem);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Pagination CSS */
+
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.pagination {
+    list-style-type: none;
+    display: flex;
+    
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.page-item {
+    background: rgba(0, 0, 0, 0.1);
+    padding: 0.5rem 0.75rem;
+    cursor: pointer;
+}
+
+.page-item:nth-child(2) {
+    background: #000;
+    color: #fff;
+    cursor: default;
+}
 
 
 @media screen and (min-width: 3000px) {

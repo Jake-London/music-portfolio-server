@@ -4,6 +4,9 @@ let discUpload = document.querySelector('#disc-upload-art');
 let text = document.querySelectorAll('.preview-container span');
 let img = document.querySelectorAll('.preview-container img');
 
+let currentPage = 0;
+let totalPages;
+
 function showPreview(textNode, imgNode, file) {
     if (file) {
         let reader = new FileReader();
@@ -36,6 +39,26 @@ discUpload.addEventListener("change", (event) => {
 
 let downloadSong = (title, bpm, duration) => {
     console.log(title, duration, bpm);
+}
+
+let sellSong = async (id, songItem) => {
+    console.log(id);
+
+    const response = await fetch(`/admin/update-available/${id}`, {
+        method: 'PATCH'
+    });
+    const result = await response.json();
+
+    if (result.status === 'ok') {
+        let soldIcon = songItem.querySelector('.sold-song');
+        if (soldIcon.classList.contains('sold-dashboard')) {
+            soldIcon.classList.remove('sold-dashboard');
+        } else {
+            soldIcon.classList.add('sold-dashboard');
+        }
+    }
+
+    console.log(result.track);
 }
 
 let deleteSong = async (id, songItem) => {
@@ -75,26 +98,36 @@ let deleteDiscography = async (id, discItem) => {
     console.log(response);
 }
 
-document.addEventListener('DOMContentLoaded', async function(event) {
-    if (location.href.split(location.host)[1] === '/admin' || location.href.split(location.host)[1] === '/admin/') {
-        await testFetch();
+let fetchSongs = async (page) => {
+    const response = await fetch('/tracklist/' + page);
     
-        console.log(song_list);
+    
+    const json = await response.json();
+    console.log(json);
+
+    if (!json.err) {
+        song_list = json.trackList;
 
         let ul = document.querySelector('.song-list');
 
         for (let i = 0; i < song_list.length; i++) {
             let song = song_list[i];
-            
             let temp = song.songPath.split('/');
             let dlPath = `http://${location.host}${song.songPath}`;
-            
-            let li = createListItem(song.coverPath, song.songName, song.songBpm, song.songDuration, 'dashboard', dlPath, temp[temp.length - 1]);
+
+            let li = createListItem(song.coverPath, song.songName, song.songBpm, song.songDuration, 'dashboard', dlPath, temp[temp.length - 1], `/track/${song._id}`);
 
             let del = li.querySelector('.delete-song');
+            let sold = li.querySelector('.sold-song');
 
             del.onclick = function() { deleteSong(song._id, this.parentNode.parentNode); };
+            sold.onclick = function() { sellSong(song._id, this.parentNode.parentNode); };
 
+            if (!song.isAvailable) {
+                sold.classList.add('sold-dashboard');
+            }
+
+            
             ul.appendChild(li);
         }
 
@@ -124,6 +157,68 @@ document.addEventListener('DOMContentLoaded', async function(event) {
 
             }
         }
+    
+    }
+    return json.count;
+}
+
+let clearSongs = () => {
+    let list = document.querySelector('.song-list');
+    list.textContent = '';
+}
+
+document.addEventListener('DOMContentLoaded', async function(event) {
+    if (location.href.split(location.host)[1] === '/admin' || location.href.split(location.host)[1] === '/admin/') {
+        const count = await fetchSongs(0);
+        console.log(`Total records is ${count}`);
+
+        totalPages = Math.ceil(count / 25);
+
+        let pageDom = document.querySelector('.current-page');
+        pageDom.innerHTML = `${currentPage + 1}`;
+
+        let next = document.querySelector('.next-item');
+        let prev = document.querySelector('.prev-item');
+        prev.style.display = 'none';
+
+        next.addEventListener('click', async () => {
+            
+            if (currentPage+1 < totalPages) {
+                currentPage++;
+                console.log('Next Page Go');
+                pageDom.innerHTML = `${currentPage + 1}`;
+                clearSongs();
+                fetchSongs(currentPage);
+
+                if (currentPage - 1 >= 0) {
+                    prev.style.display = 'inline';
+                }
+            } 
+            if (currentPage == totalPages - 1) {
+                next.style.display = 'none';
+            }
+        });
+
+        prev.addEventListener('click', async () => {
+            
+            if (currentPage-1 >= 0) {
+                currentPage--;
+                console.log('Previous Page Go');
+                pageDom.innerHTML = `${currentPage + 1}`;
+                clearSongs();
+                fetchSongs(currentPage);
+
+                if (currentPage + 1 < totalPages) {
+                    next.style.display = 'inline';
+                }
+            } 
+            if (currentPage == 0) {
+                prev.style.display = 'none';
+            }
+        })
+
+
+        
     }
     
 });

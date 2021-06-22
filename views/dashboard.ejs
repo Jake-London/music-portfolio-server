@@ -22,6 +22,10 @@
                             <input type="text" class="dashboard-input" id="upload-name" name="songName" placeholder="Song Name">
                             <input type="text" class="dashboard-input" id="upload-bpm" name="songBpm" placeholder="BPM">
                             <input type="text" class="dashboard-input" id="upload-duration" name="songDuration" placeholder="Duration">
+                            <div class="dashboard-checkbox">
+                                <input type="checkbox" name="isAvailable">
+                                <label for="isAvailable">Available for purchase</label>
+                            </div>
                             <h5>MP3 File</h5>
                             <input type="file" id="upload-mp3" name="song" >
                         </div>
@@ -79,6 +83,17 @@
                     
                     
                 </ul>
+                <div class="pagination-container">
+                    <ul class="pagination">
+                        <li class="page-item prev-item">
+                            <span>&laquo;</span>
+                        </li>
+                        <li class="page-item current-page"></li>
+                        <li class="page-item next-item">
+                            <span>&raquo;</span>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>

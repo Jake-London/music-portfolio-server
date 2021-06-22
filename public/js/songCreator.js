@@ -1,9 +1,9 @@
-let createListItem = (imgPath, songName, songBpm, songDuration, type, dlPath, fileName) => {
+let createListItem = (imgPath, songName, songBpm, songDuration, type, dlPath, fileName, songHref) => {
 
     let li = document.createElement('li');
     li.classList.add('song-item');
     li.appendChild(createArtContainer(imgPath));
-    li.appendChild(createTitleContainer(songName));
+    li.appendChild(createTitleContainer(songName, songHref));
     li.appendChild(createBpmContainer(songBpm));
     li.appendChild(createLengthContainer(songDuration));
     li.appendChild(createButtonContainer(type, dlPath, fileName));
@@ -27,16 +27,17 @@ let createImg = (path) => {
     return img;
 }
 
-let createTitleContainer = (songName) => {
+let createTitleContainer = (songName, songHref) => {
     let title = document.createElement('span');
     title.classList.add('title');
-    title.appendChild(createTitleLink(songName));
+    title.appendChild(createTitleLink(songName, songHref));
     return title;
 }
 
-let createTitleLink = (songName) => {
+let createTitleLink = (songName, songHref) => {
     let title_link = document.createElement('a');
     title_link.classList.add('title-link');
+    title_link.href = songHref;
     title_link.innerHTML = songName;
     return title_link;
 }
@@ -61,6 +62,7 @@ let createButtonContainer = (type, dlPath, fileName) => {
     if (type === 'dashboard') {
         btnCont.appendChild(createDownloadButton(dlPath, fileName));
         btnCont.appendChild(createDeleteButton());
+        btnCont.appendChild(createSoldButton());
     } else {
         btnCont.appendChild(createPlayButton());
     }
@@ -84,6 +86,13 @@ let createDeleteButton = () => {
     return del;
 }
 
+let createSoldButton = () => {
+    let sold = document.createElement('span');
+    sold.classList.add('sold-song');
+    sold.appendChild(createFontAwesomeIcon('fa-dollar-sign'));
+    return sold;
+}
+
 let createFontAwesomeIcon = (iconClass) => {
     let icon = document.createElement('i');
     icon.classList.add('fas');
@@ -95,5 +104,6 @@ let createPlayButton = () => {
     let play = document.createElement('span');
     play.classList.add('play-song');
     play.appendChild(createFontAwesomeIcon('fa-play'));
+    play.appendChild(createFontAwesomeIcon('fa-pause'));
     return play;
 }

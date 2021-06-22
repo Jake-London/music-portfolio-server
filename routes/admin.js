@@ -75,6 +75,7 @@ router.get('/logout', (req, res) => {
 
 
 router.post('/upload', ensureAuthenticated, (req, res) => {
+    console.log(req.body);
     if (req.files) {
         
         if (req.files.hasOwnProperty('cover') && req.files.hasOwnProperty('song')) {
@@ -86,10 +87,13 @@ router.post('/upload', ensureAuthenticated, (req, res) => {
                     const song = req.files.song;
                     const cover = req.files.cover;
                     
-                    const { songName, songBpm, songDuration } = req.body;
+                    const { songName, songBpm, songDuration, isAvailable } = req.body;
                     const songType = 'mp3';
+
+                    const isAvailableBoolean = isAvailable === 'on' ? true : false;
+                    console.log(`Boolean = ${isAvailableBoolean}`);
                     
-                    const newTrack = new Track({songName, songBpm, songDuration, songType, songPath: '', coverPath: ''});
+                    const newTrack = new Track({songName, songBpm, songDuration, songType, songPath: '', coverPath: '', isAvailable: isAvailableBoolean});
                     
                     let directoryPath = path.join(__dirname, '..', 'public', 'tracks', newTrack._id.toString());
                     let songUploadPath = path.join(directoryPath, song.name);
@@ -258,6 +262,19 @@ router.delete('/discography/delete/:id', deleteAuthenticate, async (req, res) =>
             });
         })
     }
+});
+
+router.patch('/update-available/:id', deleteAuthenticate, async (req, res) => {
+    console.log(req.params.id);
+    const _id = req.params.id;
+
+    const track = await Track.findOne({_id});
+
+    console.log(track);
+
+    track.isAvailable = !track.isAvailable;
+    await track.save();
+    res.json({track, status: 'ok'});
 })
 
 

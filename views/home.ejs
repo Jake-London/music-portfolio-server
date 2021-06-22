@@ -8,11 +8,16 @@
         
 
         <div class="search-container">
-            <form action="" class="search-form">
-                <div>
+            <form action="/search" class="search-form" method="GET">
+                <div class="search-icon-container">
                     <i class="far fa-search"></i>
                 </div>
-                <input type="text" class="form-search" name="search" placeholder="Search">
+                <div class="search-input-container">
+                    <input type="text" class="form-search" name="search" placeholder="Search">
+                    <div class="search-preview-container">
+
+                    </div>
+                </div>
             </form>
             <!-- <span><i class="fas fa-filter"></i></span> -->
         </div>
@@ -46,7 +51,7 @@
     <div class="player-1">
         <div class="player-info">
             <div class="player-art">
-                <img src="img/1606190530328.png" alt="">
+                <img src="" alt="">
             </div>
             <div class="player-title">
                 <p>test</p>
@@ -56,7 +61,7 @@
             <div class="player-prev" onclick="prevSong()">
                 <i class="fas fa-step-backward"></i>
             </div>
-            <div class="player-play" onclick="setPlayState()">
+            <div class="player-play" onclick="setPlayState('.play-song')">
                 <i class="fas fa-play-circle" style="display:none"></i>
                 <i class="fas fa-pause-circle" ></i>
             </div>

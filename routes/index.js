@@ -5,10 +5,20 @@ const { ensureAuthenticated } = require('../config/auth');
 const Track = require('../models/Track');
 const Discography = require('../models/Discography');
 
-router.get('/', async (req, res) => {
-    
-    
-    res.render('home')});
+router.get('/', (req, res) => res.render('home'));
+
+router.get('/search', async (req, res) => {
+    console.log(req.query.name);
+    let songName = req.query.name;
+    songName = songName.replace(/\(/gi, '\\(');
+    songName = songName.replace(/\)/gi, '\\)');
+    console.log(songName);
+
+    const results = await Track.find({songName: { "$regex": songName, "$options": "i" }});
+
+
+    res.json(results);
+})
 
 router.get('/admin', ensureAuthenticated, async (req, res) => {
     console.log(req.user);
@@ -30,20 +40,29 @@ router.get('/tracklist/:num', async (req, res) => {
 
         if (index < count) {
             const trackList = await Track.find().sort({_id:-1}).limit(25).skip(index);
-            res.json(trackList);
+            res.json({trackList, count});
         } else {
             res.json({err: "No more songs"});
         }
     })
 });
 
+router.get('/track/:id', async (req, res) => {
+    const _id = req.params.id
+    try {
+        const track = await Track.findOne({_id});
+        console.log(track);
+        res.render('track', {track});
+    } catch {
+        res.render('404');
+    }
+
+
+});
+
 router.get('/about', async (req, res) => {
-
     const discographyList = await Discography.find().sort({_id:-1}).limit(25);
-
     console.log(discographyList);
-
-
     res.render('about', {discographyList});
 });
 
@@ -51,7 +70,6 @@ router.get('/pricing', (req, res) => res.render('pricing'));
 
 router.post('/contact', (req, res) => {
     console.log(req.body);
-
     req.flash('contactSuccess', 'Message submitted successfully');
     res.redirect('/pricing');
 })
