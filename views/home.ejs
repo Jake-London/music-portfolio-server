@@ -1,25 +1,24 @@
 <div class="page-content">
     <div class="content-title">
         <h1>TRACKS</h1>
-        <!-- <p>Click on a song to play. Filter by tags to find specific songs.</p> -->
     </div>
     
     <div class="content-container">
         
 
-        <div class="search-container">
-            <form action="/search" class="search-form" method="GET">
+        <div class="search-container" tabindex="1">
+            <form action="/search" class="search-form" method="GET" autocomplete="off">
                 <div class="search-icon-container">
                     <i class="far fa-search"></i>
                 </div>
                 <div class="search-input-container">
                     <input type="text" class="form-search" name="search" placeholder="Search">
                     <div class="search-preview-container">
-
+                        <ul class="preview-list">
+                        </ul>
                     </div>
                 </div>
             </form>
-            <!-- <span><i class="fas fa-filter"></i></span> -->
         </div>
 
         <div class="list-container">
@@ -28,11 +27,8 @@
                     <span class="art"></span>
                     <span class="title">Title</span>
                     <span class="bpm">BPM</span>
-                    <span class="length">Length</span>
-                    
+                    <span class="length">Length</span>    
                 </li>
-                
-                
             </ul>
         </div>
     </div>
@@ -43,9 +39,7 @@
 <div>
     <div class="player-2">
         <div class="slider-container">
-            <!-- <p class="current-time">0:00</p> -->
             <input type="range" value="1" class="seek-slider" min="1" max="10000" oninput="seek()">
-            <!-- <p class="end-time">0:00</p> -->
         </div>
     </div>
     <div class="player-1">

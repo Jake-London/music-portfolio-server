@@ -350,11 +350,37 @@ let delaySearch = (value) => {
     }, 500)
 }
 
+let createPreviewItem = (song) => {
+    let li = document.createElement('li');
+    li.classList.add('preview-item');
+
+    let img = document.createElement('img');
+    img.src = song.coverPath;
+
+    let a = document.createElement('a');
+    a.classList.add('title-link');
+    a.textContent = song.songName;
+    a.href = `/track/${song._id}`;
+
+    li.appendChild(img);
+    li.appendChild(a);
+
+    return li;
+}
+
 let searchRequest = async (value) => {
+
+    let ul = document.querySelector('.preview-list');
+    ul.textContent = '';
+
     if (value) {
         let params = new URLSearchParams({name: value});
         let response = await fetch(`${window.location}search?${params}`);
         let json = await response.json();
+
+        json.forEach(song => {
+            ul.appendChild(createPreviewItem(song));
+        });
         console.log(json);
     }
 
@@ -398,6 +424,27 @@ document.addEventListener('DOMContentLoaded', async function(event) {
 
         document.querySelector('.form-search').addEventListener('focus', (e) => {
             console.log('focused');
+            let preview = document.querySelector('.search-preview-container');
+            preview.style.display = 'block';
+            
+        });
+
+
+        document.querySelector('.form-search').addEventListener('focusout', (e) => {
+            console.log('lost focus');
+            let previewItems = document.querySelectorAll('.preview-list .title-link');
+            let found = false;
+            previewItems.forEach(element => {
+                console.log(element);
+                if (element === e.relatedTarget) {
+                    found = true;
+                }
+            });
+
+            if (!found) {
+                let preview = document.querySelector('.search-preview-container');
+                preview.style.display = 'none';
+            }
         })
         
 

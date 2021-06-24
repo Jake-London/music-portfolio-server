@@ -31,10 +31,10 @@ html {
     flex: 1;
 }
 
-.nav-logo-container > img {
+/* .nav-logo-container > img {
     max-height: 80%;
     padding: 10px 0px;
-}
+} */
 
 .nav-logo-container {
     display: flex;
@@ -86,7 +86,7 @@ html {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 50px 0px;
+    padding: 3.125rem 0rem;
     width: 100%;
     background: rgb(250, 250, 250);
     margin-top: 6.25rem;
@@ -118,10 +118,12 @@ html {
     align-items: center;
     padding:0px 15px;
     background: rgb(255, 255, 255);
+    border-radius: 5px;
 }
 
 .search-input-container {
     width: 100%;
+    position: relative;
 }
 
 .search-input-container > input {
@@ -131,8 +133,15 @@ html {
     height: 45px;
     box-sizing: border-box;
     border: none;
+    border-radius: 5px;
     background: rgb(255, 255, 255);
 }
+
+.search-input-container > input:focus {
+    outline: none;
+}
+
+
 
 .search-container {
     display: flex;
@@ -140,7 +149,7 @@ html {
     margin-bottom: 25px;
     border-radius: 5px;
     border: 1px solid rgba(0, 0, 0, 0.1);
-    overflow: hidden;
+    
 }
 
 .search-container > span {
@@ -156,12 +165,38 @@ html {
     cursor: pointer;
 }
 
+.search-preview-container {
+    display: none;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 1.4rem 10px;
+    position: absolute;
+    z-index: 1;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background: #fff;
+    border-top: none;
+    left: -1px;
+}
+
+.preview-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1px;
+}
+
+.preview-item > img {
+    height: 3.125em;
+    width: 3.125rem;
+    padding-right: 30px;
+}
+
 .song-list {
     list-style-type: none;
 }
 
 .list-container {
     width: 100%;
+    z-index: -1;
 }
 
 .song-item {
@@ -266,10 +301,6 @@ html {
     
 }
 
-.player-art {
-    /* flex: 1; */
-}
-
 .player-art > img {
     max-height: 100%;
     
@@ -320,14 +351,6 @@ html {
     justify-content: flex-end;
     align-items: center;
     padding-right: 35px;
-}
-
-input[type=range]{
-    /* fix for FF unable to apply focus style bug  */
-    /* border: 1px solid white;  */
-
-    /*required for proper track sizing in FF*/
-    
 }
 
 input[type=range]::-moz-range-track {
@@ -403,17 +426,14 @@ input[type=range]:focus::-webkit-slider-runnable-track {
 
 .slider-container {
     display: flex;
-    /* padding: 10px 35px 10px 20px; */
     justify-content: center;
     align-items: center;
 }
 
 .seek-slider {
     flex: 1;
-    /* margin: 0px 10px; */
     overflow: hidden;
     height: 7px;
-    /* border-radius: 15px; */
 }
 
 .seek-slider::-webkit-slider-thumb {
@@ -446,7 +466,7 @@ input[type=range]:focus::-webkit-slider-runnable-track {
 }
 
 
-/* login css */
+/* Login CSS */
 
 #login-form, #register-form {
     padding-top: 6.25rem;
@@ -499,10 +519,7 @@ input[type=range]:focus::-webkit-slider-runnable-track {
 /* ADMIN PANEL */
 
 .dashboard-content-container {
-    /* margin-top: 125px; */
     display: flex;
-    /* justify-content: center;
-    align-items: center; */
     padding-bottom: 50px;
     flex-direction: column;
     width: 100%;
@@ -561,10 +578,6 @@ input[type=range]:focus::-webkit-slider-runnable-track {
     flex-direction: column;
 }
 
-.song-details > input {
-    
-}
-
 .dashboard-form h5 {
     margin-bottom: 10px;
 }
@@ -594,7 +607,6 @@ input[type=range]:focus::-webkit-slider-runnable-track {
     display: flex;
     justify-content: center;
     align-items: center;
-    
 }
 
 .preview-container img {
@@ -691,8 +703,8 @@ input[type=range]:focus::-webkit-slider-runnable-track {
 }
 
 .about-img img {
-    max-width: 450px;
-    width: 20vw;
+    /* max-width: 450px; */
+    width: 24rem;
     border-radius: 50%;
 }
 
@@ -704,22 +716,18 @@ input[type=range]:focus::-webkit-slider-runnable-track {
 }
 
 .about-info h1 {
-    font-size: 3rem;
+    font-size: 2.5rem;
 }
 
 .about-info h2 {
     color: rgba(0, 0, 0, 0.7);
-    font-size: 2rem;
+    font-size: 1.5rem;
     padding-bottom: 1.5rem;
 }
 
 .about-info p {
     font-size: 1.5rem;
     line-height: 1.8rem;
-}
-
-.discography-container {
-    /* margin-bottom: 100px; */
 }
 
 .discography-container ul {
@@ -729,10 +737,11 @@ input[type=range]:focus::-webkit-slider-runnable-track {
 }
 
 .discography-container h1 {
-    font-size: 3rem;
+    font-size: 2.5rem;
     width: 90%;
     margin: auto;
-    padding-bottom: 50px;
+    padding-bottom: 3.125rem;
+    
 }
 
 .disc-item {
@@ -758,8 +767,6 @@ input[type=range]:focus::-webkit-slider-runnable-track {
     position: absolute;
     transition: height 0.5s;
     background: #000;
-    /* margin-right: 0.32rem;
-    margin-bottom: 0.32rem; */
     top: 0;
     left: 0;
 }
@@ -792,8 +799,8 @@ input[type=range]:focus::-webkit-slider-runnable-track {
 
 .footer {
     
-    padding-top: 50px;
-    padding-bottom: 80px;
+    padding-top: 3.125rem;
+    padding-bottom: 3.125rem;
 }
 
 .footer-1 {
@@ -814,20 +821,20 @@ input[type=range]:focus::-webkit-slider-runnable-track {
 }
 
 .footer-socials {
-    padding-bottom: 25px;
+    padding-bottom: 1.5625rem;
 }
 
 .footer-socials a {
     font-size: 2.5rem;
-    padding: 0px 10px;
+    padding: 0rem 0.625rem;
 }
 
 .footer-nav a {
-    padding: 0px 10px;
+    padding: 0rem 0.625rem;
 }
 
 .footer-copyright {
-    padding-top: 25px;
+    padding-top: 1.5625rem;
     color: rgba(255, 255, 255, 0.5);
 }
 
@@ -849,21 +856,18 @@ input[type=range]:focus::-webkit-slider-runnable-track {
 }
 
 .split-2 {
-    width: 485px;
+    width: 30.3125rem;
     background: #fff;
-    
     box-sizing: border-box;
 }
 
 .contact-container {
-    
     margin: auto;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     height: 100%;
-    
 }
 
 .contact-container > div {
@@ -919,8 +923,6 @@ input[type=range]:focus::-webkit-slider-runnable-track {
 textarea {
     font-family: 'Roboto', sans-serif;
 }
-
-.label-container > input {}
 
 .label-container > textarea {
     max-width: 100%;
@@ -1033,11 +1035,9 @@ textarea {
 
 .track-container {
     margin-top: 6.25rem;
-    
     width: 100%;
     height: calc(100vh - 6.25rem);
     min-height: 650px;
-    
     display: flex;
     justify-content: center;
     align-items: center;
@@ -1177,6 +1177,11 @@ textarea {
     cursor: default;
 }
 
+@media screen and (min-width: 2500px) {
+    html {
+        font-size: 18px;
+    }
+}
 
 @media screen and (min-width: 3000px) {
 
