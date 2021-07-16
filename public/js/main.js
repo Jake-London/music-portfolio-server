@@ -234,8 +234,15 @@ document.addEventListener('DOMContentLoaded', async function(event) {
             });
 
             if (!found) {
-                let preview = document.querySelector('.search-preview-container');
-                preview.style.display = 'none';
+                if (screen.width <= 800) {
+                    setTimeout(function() {
+                        let preview = document.querySelector('.search-preview-container');
+                        preview.style.display = 'none';
+                    }, 500);
+                } else {
+                    let preview = document.querySelector('.search-preview-container');
+                    preview.style.display = 'none';
+                }
             }
         })
         
