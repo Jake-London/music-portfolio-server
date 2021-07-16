@@ -1215,7 +1215,8 @@ textarea {
 @media screen and (max-width: 800px) {
 
     .content-container {
-        width: 90vw;
+        width: 100vw;
+        box-sizing: border-box;
     }
 
     .art {
