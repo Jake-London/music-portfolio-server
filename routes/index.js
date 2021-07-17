@@ -33,10 +33,10 @@ router.get('/tracklist/:num', async (req, res) => {
     const page = req.params.num;
     const index = page * 25;
 
-    console.log(page, index);
+    console.log(`Page Number: ${page} |`, `Start Index: ${index}`);
 
     await Track.countDocuments({}, async function(err, count) {
-        console.log(count);
+        console.log(`Total documents: ${count}`);
 
         if (index < count) {
             const trackList = await Track.find().sort({_id:-1}).limit(25).skip(index);

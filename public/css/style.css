@@ -706,7 +706,9 @@ input[type=range]:focus::-webkit-slider-runnable-track {
 .about-img img {
     /* max-width: 450px; */
     width: 24rem;
+    height: 24rem;
     border-radius: 50%;
+    object-fit: cover;
 }
 
 .about-info {
@@ -983,6 +985,10 @@ textarea {
     text-align: center;
     padding: 15px 0px;
     font-size: 2.5rem;
+}
+
+.tier-price:last-of-type {
+    font-size: 1.5rem;
 }
 
 .tier-benefits {
@@ -1304,6 +1310,7 @@ textarea {
         top: 0;
         left: 0;
         width: 100%;
+        z-index: -1;
     }
 
     .nav-links > li {
@@ -1340,6 +1347,60 @@ textarea {
 
     .track-details > div {
         margin: 0rem 0.3rem;
+    }
+
+    .track-container {
+        min-height: calc(100vh - 6.25rem);
+        height: 100%;
+    }
+
+    .track-details {
+        padding-bottom: 2rem;
+    }
+
+    .about-info {
+        margin-top: 2rem;
+    }
+
+    .about-container {
+        flex-direction: column;
+        margin-top: 0rem;
+        margin-bottom: 3rem;
+    }
+
+    .about-img {
+        margin-right: 0rem;
+    }
+
+    .about-img img {
+        width: 18rem;
+        height: 18rem;
+    }
+
+    .disc-hover {
+        height: 100%;
+        opacity: 1;
+        background: initial;
+        transition: none;
+    }
+    .disc-hover iframe {
+        height: 80px;
+        opacity: 1;
+        transition: none;
+    }
+    
+    .disc-item {
+        width: initial;
+        padding-right: 0rem;
+    }
+
+    .disc-item::before {
+        position: absolute;
+        background: #000;
+        opacity: 0.5;
+        height: calc(100% - 0.32rem);
+        width: 100%;
+        content: '';
     }
 
 }

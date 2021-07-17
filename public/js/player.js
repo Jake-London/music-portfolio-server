@@ -20,9 +20,9 @@ let setPlayState = (id) => {
 
     console.log('setPlayState');
 
+    /* Select the player play/pause buttons and the play/pause button of the song in the displayed track list */
     let playerPlayButton = document.querySelector('.player-play').children[0];
     let playerPauseButton = document.querySelector('.player-play').children[1];
-
     let listItemPlayButton = current_song_item.querySelector(id).children[0];
     let listItemPauseButton = current_song_item.querySelector(id).children[1];
 
@@ -52,6 +52,7 @@ let setPlayState = (id) => {
     console.log("Playing song: " + isPlaying);
 }
 
+/* Volume toggle when megaphone icon is clicked */
 let toggleVolume = () => {
 
     /* Select relevant icon elements */
@@ -81,14 +82,19 @@ let toggleVolume = () => {
 
 }
 
+/* Volume slider handler */
 let setVolume = () => {
 
-    let value = volume_slider.value;
-    console.log(value);
-
+    /* Select relevant icon elements */
     let unmuted = document.querySelector('.fa-volume-up');
     let muted = document.querySelector('.fa-volume-mute');
 
+    /* Get current value of slider */
+    let value = volume_slider.value;
+    console.log(value);
+
+    
+    /* Adjust muted/unmuted icon when slider hits lowest value */
     if (value === "1") {
         unmuted.style.display = "none";
         muted.style.display = "inline";
@@ -99,6 +105,7 @@ let setVolume = () => {
         isMuted = false;
     }
 
+    /* Update volume value based on slider value */
     if (!isMuted) {
         current_track.volume = volume_slider.value / 100;
     } else {
@@ -107,10 +114,12 @@ let setVolume = () => {
 
 }
 
+/* Click & drag to adjust current time in the song */
 let seek = () => {
     current_track.currentTime = current_track.duration * (seek_slider.value / 10000);
 }
 
+/* Update the visual indicator for current track time (seek_slider) */
 let seekUpdate = () => {
     let seekPosition = 0;
    

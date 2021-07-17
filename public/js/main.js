@@ -70,11 +70,11 @@ let newSong = (elem) => {
 }
 
 let fetchTracks = async (pageNum) => {
-    console.log(`End reached: ${end}`);
+    
     if (!end) {
         const response = await fetch('/tracklist/' + pageNum);
-        console.log(response);
         const json = await response.json();
+        console.log('Response: ', json.trackList);
 
         if (!json.err) {
             song_list = [...song_list, ...json.trackList];
@@ -96,13 +96,13 @@ let fetchTracks = async (pageNum) => {
                 ul.appendChild(li);
             }
 
-            let discography_list = document.querySelectorAll('.disc-item img');
+            /* let discography_list = document.querySelectorAll('.disc-item img');
 
             if (discography_list) {
                 console.log(discography_list);
 
                 for (let i = 0; i < discography_list.length; i++) {
-                    /* console.log(discography_list[i].offsetWidth); */
+                    // console.log(discography_list[i].offsetWidth);
 
                     discography_list[i].parentNode.style.height = discography_list[i].offsetWidth + 'px';
 
@@ -113,11 +113,13 @@ let fetchTracks = async (pageNum) => {
                     }
 
                 }
-            }
+            } */
         } else {
             end = true;
         }
     }
+
+    console.log(`End reached: ${end}`);
     
 }
 
@@ -186,7 +188,7 @@ document.addEventListener('DOMContentLoaded', async function(event) {
         pageNum++;
         
     
-        console.log(song_list);
+        /* console.log(song_list); */
 
         let callback = (entries, observer) => {
             entries.forEach(async (entry) => {
