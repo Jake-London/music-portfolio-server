@@ -80,7 +80,7 @@ router.post('/upload', ensureAuthenticated, (req, res) => {
         
         if (req.files.hasOwnProperty('cover') && req.files.hasOwnProperty('song')) {
             
-            if (req.files.cover.mimetype == 'image/gif' || req.files.cover.mimetype == 'image/png' || req.files.cover.mimetype == 'image/jpeg') {
+            if (req.files.cover.mimetype === 'image/gif' || req.files.cover.mimetype === 'image/png' || req.files.cover.mimetype === 'image/jpeg') {
                 
                 if (req.files.song.mimetype === 'audio/mpeg' || req.files.song.mimetype === 'audio/flac' || req.files.song.mimetype === 'audio/wav') {
 
@@ -161,7 +161,7 @@ router.post('/upload/disc', ensureAuthenticated, (req, res) => {
         
         if (req.files.hasOwnProperty('cover')) {
 
-            if (req.files.cover.mimetype == 'image/gif' || req.files.cover.mimetype == 'image/png' || req.files.cover.mimetype == 'image/jpeg') {
+            if (req.files.cover.mimetype === 'image/gif' || req.files.cover.mimetype === 'image/png' || req.files.cover.mimetype === 'image/jpeg') {
 
                 const discCover = req.files.cover;
 
