@@ -82,13 +82,14 @@ router.post('/upload', ensureAuthenticated, (req, res) => {
             
             if (req.files.cover.mimetype == 'image/gif' || req.files.cover.mimetype == 'image/png' || req.files.cover.mimetype == 'image/jpeg') {
                 
-                if (req.files.song.mimetype == 'audio/mpeg' || req.files.song.mimetype == 'audio/flac') {
+                if (req.files.song.mimetype === 'audio/mpeg' || req.files.song.mimetype === 'audio/flac' || req.files.song.mimetype === 'audio/wav') {
 
                     const song = req.files.song;
                     const cover = req.files.cover;
                     
                     const { songName, songBpm, songDuration, isAvailable } = req.body;
-                    const songType = 'mp3';
+                    const songType = song.mimetype;
+
 
                     const isAvailableBoolean = isAvailable === 'on' ? true : false;
                     console.log(`Boolean = ${isAvailableBoolean}`);
@@ -134,7 +135,7 @@ router.post('/upload', ensureAuthenticated, (req, res) => {
                     });
 
                 } else {
-                    req.flash('uploadError', 'Incorrect audio format. Support formats include .mp3');
+                    req.flash('uploadError', 'Incorrect audio format. Supported formats include .mp3, .flac, .wav');
                     res.redirect('/admin');
                 }
 
