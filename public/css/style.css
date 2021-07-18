@@ -1403,6 +1403,27 @@ textarea {
         content: '';
     }
 
+    .tier-list {
+        flex-direction: column;
+    }
+
+    .tier-item {
+        padding: 1rem 0rem;
+    }
+
+    .tier-price {
+        padding: 8px 0px;
+    }
+
+    .split-container {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .split-2 {
+        width: 100%;
+    }
+
 }
 
 @media screen and (max-width: 610px) {
@@ -1415,7 +1436,7 @@ textarea {
     }
 
     .contact-container {
-        width: 90%;
-        margin: auto;
+        
+        
     }
 }
