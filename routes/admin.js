@@ -14,6 +14,47 @@ const Discography = require('../models/Discography');
 //Login Page
 router.get('/login', (req, res) => res.render('login', {title: "- Login"}));
 
+//Register Page
+router.get('/register', (req, res) => res.render('register', {title: "- Register"}));
+
+// Register New User
+router.post('/register',  async (req, res) => {
+    const { username, password } = req.body;
+    let errors = [];
+
+    // Check required fields
+    if (!username || !password) {
+        errors.push({ msg: 'Please fill in all fields' });
+    }
+
+    if (errors.length > 0) {
+        res.render('register', {
+            errors
+        });
+    } else {
+        // Validation passed
+
+        const response = await User.findOne({username});
+
+        if (response) {
+            errors.push({ msg: "User with this name already exists."});
+            res.render('register', { errors });
+        } else {
+            const newUser = new User({username, password});
+
+            // Hash Password
+            bcrypt.genSalt(10, (err, salt) => bcrypt.hash(newUser.password, salt, async (err, hash) => {
+                if (err) throw err;
+                newUser.password = hash;
+                const user = await newUser.save();
+                res.redirect('/login');
+            }));
+
+
+        }
+    }
+});
+
 // Login User
 router.post('/login', (req, res, next) => {
     passport.authenticate('local', {

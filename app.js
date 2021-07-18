@@ -48,6 +48,7 @@ app.use((req, res, next) => {
     res.locals.discError = req.flash('discError');
     res.locals.discSuccess = req.flash('discSuccess');
     res.locals.contactSuccess = req.flash('contactSuccess');
+    res.locals.contactError = req.flash('contactError');
     next();
 })
 
