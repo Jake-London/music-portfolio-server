@@ -103,7 +103,7 @@ router.post('/contact', (req, res) => {
         const mail =  {
             from: `Contact Form Submission - prodbysixon.com <${keys.user}>`,
             to: `${keys.sendTo}`,
-            subject: "Contect Form Submitted",
+            subject: "Contact Form Submitted",
             text: `Name: ${name}, Email: ${email}, Subject: ${subject}, Message: ${message}, IP: ${ip}`,
             html: `<p>Name: ${name}</p><p>Email: ${email}</p><p>Subject: ${subject}</p><p>Message: ${message}</p><p>IP: ${ip}</p>`
         };
