@@ -4,12 +4,15 @@ const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const path = require('path');
 const fs = require('fs');
+const axios = require('axios');
 const { ensureAuthenticated, deleteAuthenticate } = require('../config/auth');
 
 // DB models
 const User = require('../models/User');
 const Track = require('../models/Track');
 const Discography = require('../models/Discography');
+
+const spotifyKeys = require('../config/spotifyKeys');
 
 //Login Page
 router.get('/login', (req, res) => res.render('login', {title: "- Login"}));
@@ -113,10 +116,63 @@ router.post('/upload', ensureAuthenticated, (req, res) => {
 
 });
 
-router.post('/upload/disc', ensureAuthenticated, (req, res) => {
-    console.log(req.body);
+router.post('/spotify', ensureAuthenticated, async (req, res) => {
+    let {id} = req.body;
+    console.log(id);
 
-    if (req.files) {
+    
+
+    let encodedKey = encodeURIComponent('grant_type');
+    let encodedValue = encodeURIComponent('client_credentials');
+
+    let data = (encodedKey + '=' + encodedValue);
+
+    try {
+        const response = await axios.post('https://accounts.spotify.com/api/token', data, 
+        {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Authorization': spotifyKeys.spotifyAuthorization
+            }        
+        });
+        
+        const obj = response.data;
+        
+        console.log(obj);
+
+        const track = await axios.get(`https://api.spotify.com/v1/tracks/${id}`, {
+            headers: {
+                'Authorization': `${obj.token_type} ${obj.access_token}`
+            }
+        });
+
+        res.json({imgUrl: track.data.album.images[0].url, songName: track.data.name, songArtists: track.data.artists,  status: 'ok'});
+    } catch (e) {
+        console.log(e);
+        res.json({status: 'error'});
+    }
+    
+
+    
+
+})
+
+router.post('/upload/disc', ensureAuthenticated, async (req, res) => {
+    console.log('here', req.body);
+
+    const { discName, discSpotifyId, discArtists, discCoverUrl } = req.body;
+
+    const discSpotifyEmbed = `<iframe src="https://open.spotify.com/embed/track/${discSpotifyId}" width="100%" height="80" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>`;
+
+    if (discName === '' || discSpotifyId === '' || discArtists === '' || discCoverUrl === '') {
+        res.json({msg: 'Error uploading discography', status: 'error'});   
+    } else {
+        const newDisc = new Discography({ discName, discArtists, discSpotifyId, discSpotifyEmbed, discCoverUrl });
+        const disc = await newDisc.save();
+        res.json({msg: 'Discography Successfully uploaded', status: 'ok'});   
+    }
+
+    /* if (req.files) {
         
         if (req.files.hasOwnProperty('cover')) {
 
@@ -168,7 +224,7 @@ router.post('/upload/disc', ensureAuthenticated, (req, res) => {
     } else {
         req.flash('discError', 'Files not selected.');
         res.redirect('/admin');
-    }
+    } */
 });
 
 router.delete('/delete/:id', deleteAuthenticate, async (req, res) => {

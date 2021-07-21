@@ -46,14 +46,12 @@
                                 <span class="preview-text">Preview</span>
                                 <img src="">
                             </div>
-                            <h5>Cover Art</h5>
-                            <input type="file" id="disc-upload-art" name="cover">
+                            <h5>Cover Art</h5>              
                         </div>
                         <div class="song-details">
                             <h5>Song Details</h5>
-                            <input type="text" class="dashboard-input" id="disc-upload-name" name="discName" placeholder="Song Name">
-                            <input type="text" class="dashboard-input" id="disc-upload-bpm" name="discSpotify" placeholder="Spotify Embed Code">
-                            
+                            <input type="text" class="dashboard-input" id="disc-spotify-link" name="discSpotify" placeholder="Spotify Share Link">
+                            <div class="disc-preview"></div>
                         </div>
                     </div>
                     <div class="song-upload">
@@ -100,8 +98,11 @@
             <ul>
                 <% discographyList.forEach(disc => { %>
                     <li class="disc-item">
-                        <img src="<%= disc.discCoverPath %> " alt="">
+                        <img src="<%= disc.discCoverUrl %> " alt="">
                         <div class="disc-admin">
+                            <div class="disc-embed">
+                                <%- disc.discSpotifyEmbed %> 
+                            </div>
                             <p><%= disc.discName %> </p>
                             <span class="delete-disc" data-id="<%= disc._id %>">
                                 <i class="fas fa-trash-alt"></i>

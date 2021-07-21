@@ -685,6 +685,11 @@ input[type=range]:focus::-webkit-slider-runnable-track {
     right: 0px;
 }
 
+.song-details p {
+    font-size: 0.85rem;
+    padding-bottom: 0.5rem;
+}
+
 /* About CSS */
 
 .about-container {
@@ -778,6 +783,7 @@ input[type=range]:focus::-webkit-slider-runnable-track {
     height: 0px;
     opacity: 0;
     transition: opacity 0.8s ease-in;
+    width: 80%;
 }
 
 .disc-item:hover .disc-hover {
@@ -1387,6 +1393,7 @@ textarea {
         height: 80px;
         opacity: 1;
         transition: none;
+        
     }
     
     .disc-item {

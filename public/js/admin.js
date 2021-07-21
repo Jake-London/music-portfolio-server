@@ -7,6 +7,13 @@ let img = document.querySelectorAll('.preview-container img');
 let currentPage = 0;
 let totalPages;
 
+let disc = {
+    discCoverUrl: '',
+    discName: '',
+    discArtists: '',
+    discSpotifyId: '',
+};
+
 function showPreview(textNode, imgNode, file) {
     if (file) {
         let reader = new FileReader();
@@ -32,10 +39,128 @@ coverUpload.addEventListener("change", (event) => {
     showPreview(text[0], img[0], file);
 });
 
-discUpload.addEventListener("change", (event) => {
+/* discUpload.addEventListener("change", (event) => {
     let file = event.target.files[0];
     showPreview(text[1], img[1], file);
-});
+}); */
+
+let delaySpotifyInfoRequest = (value) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+        spotifyInfoRequest(value);
+    }, 500)
+}
+
+let spotifyInfoRequest = async (value) => {
+    let uploadButton = document.querySelector('#disc-upload-submit');
+    let previewContainer = document.querySelector('.disc-preview');
+    uploadButton.disabled = true;
+    uploadButton.classList.remove('upload-btn');
+
+    disc.discCoverUrl = '';
+    disc.discSpotifyId = '';
+    disc.discName = '';
+    disc.discArtists = '';
+
+    
+    let array = value.split('/');
+    let array2 = array[array.length - 1].split('?');
+    let id = array2[0];
+    
+    let data = [];
+    
+    let encodedKey = encodeURIComponent('id');
+    let encodedValue = encodeURIComponent(id);
+    data.push(encodedKey + '=' + encodedValue);
+    data = data.join("&");
+    
+    let request = await fetch('/admin/spotify', {
+        method: 'POST',
+        body: data,
+        headers: { "Content-Type": "application/x-www-form-urlencoded" }
+    });
+    
+    let response = await request.json();
+    console.log(response);
+    
+    if (response.imgUrl && response.status === 'ok') {
+        text[1].style.display = 'none';
+        img[1].style.display = 'block';
+        
+        img[1].setAttribute("src", response.imgUrl);
+        let spotifyPreviewContent = `<iframe src="https://open.spotify.com/embed/track/${id}" width="100%" height="80" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>`;
+        previewContainer.innerHTML = spotifyPreviewContent;
+
+        
+        disc.discCoverUrl = img[1].src;
+        disc.discSpotifyId = id;
+        disc.discName = response.songName;
+        
+        let arr = [];
+        response.songArtists.forEach(artist => {
+            arr.push(artist.name);
+        });
+        
+        disc.discArtists = arr.join(',');
+        
+    }
+    
+    uploadButton.classList.add('upload-btn');
+    uploadButton.disabled = false;
+    
+}
+
+let uploadDiscography = async () => {
+
+    if (disc.imgUrl !== '') {
+        console.log(disc);
+
+        var data = [];
+
+        for (let key in disc) {
+            let encodedKey = encodeURIComponent(key);
+            let encodedValue = encodeURIComponent(disc[key]);
+            data.push(`${encodedKey}=${encodedValue}`);
+        }
+        data = data.join("&");
+
+        const response = await fetch('/admin/upload/disc', {
+            method: 'POST',
+            body: data,
+            headers: { "Content-Type": "application/x-www-form-urlencoded" }
+        });
+
+        const result = await response.json();
+        console.log(result);
+
+        createFlashMessage(result.msg, result.status);
+
+    }
+
+}
+
+let createFlashMessage = (msg, status) => {
+    let form = document.querySelector('#upload-disc-form');
+    let flash = form.querySelectorAll(".success-flash, .error-flash");
+
+    flash.forEach(element => {
+        form.removeChild(element);
+    });
+
+    let messageContainer = document.createElement('div');
+    let message = document.createElement('p');
+
+    message.textContent = msg;
+    messageContainer.append(message);
+
+    if (status === 'ok') {
+        messageContainer.classList.add('success-flash');
+    } else {
+        messageContainer.classList.add('error-flash');
+    }
+
+    document.querySelector('#upload-disc-form').prepend(messageContainer);
+}
 
 let downloadSong = (title, bpm, duration) => {
     console.log(title, duration, bpm);
@@ -215,7 +340,16 @@ document.addEventListener('DOMContentLoaded', async function(event) {
             if (currentPage == 0) {
                 prev.style.display = 'none';
             }
-        })
+        });
+
+        document.querySelector('#disc-spotify-link').addEventListener('input', (e) => {
+            delaySpotifyInfoRequest(e.target.value);
+        });
+
+        document.querySelector('#upload-disc-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            uploadDiscography();
+        }) 
 
 
         

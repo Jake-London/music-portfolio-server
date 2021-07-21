@@ -20,9 +20,9 @@
                 <ul>
                     <% for( let i = 0; i < discographyList.length; i++ ) { %>
                         <li class="disc-item">
-                            <img src="<%= discographyList[i].discCoverPath %> " alt="">
+                            <img src="<%= discographyList[i].discCoverUrl %> " alt="">
                             <div class="disc-hover">
-                                <%- discographyList[i].discSpotify %>
+                                <%- discographyList[i].discSpotifyEmbed %>
                             </div>
                         </li>
                     <% } %>
