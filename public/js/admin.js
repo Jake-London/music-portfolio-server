@@ -289,7 +289,9 @@ let fetchSongs = async (page) => {
 
 let clearSongs = () => {
     let list = document.querySelector('.song-list');
+    let heading = document.querySelector('.song-item');
     list.textContent = '';
+    list.append(heading);
 }
 
 document.addEventListener('DOMContentLoaded', async function(event) {
