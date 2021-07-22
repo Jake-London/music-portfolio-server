@@ -255,35 +255,35 @@ let fetchSongs = async (page) => {
             
             ul.appendChild(li);
         }
-
-        let discographyList = document.querySelectorAll('.delete-disc');
-        console.log(discographyList);
-
-        for (let i = 0; i < discographyList.length; i++) {
-            console.log(discographyList[i]);
-            discographyList[i].onclick = function() { deleteDiscography(this.getAttribute('data-id'), this.parentNode.parentNode); };
-        }
-
-        let discography_list = document.querySelectorAll('.disc-item img');
-
-        if (discography_list) {
-            console.log(discography_list);
-
-            for (let i = 0; i < discography_list.length; i++) {
-                /* console.log(discography_list[i].offsetWidth); */
-
-                discography_list[i].style.height = discography_list[i].offsetWidth + 'px';
-
-                if ((i + 1) % 5 == 0) {
-                    console.log('here');
-                    console.log(discography_list[i]);
-                    discography_list[i].parentNode.style.paddingRight = "0px";
-                }
-
-            }
-        }
-    
     }
+
+    let discographyList = document.querySelectorAll('.delete-disc');
+    console.log(discographyList);
+
+    for (let i = 0; i < discographyList.length; i++) {
+        console.log(discographyList[i]);
+        discographyList[i].onclick = function() { deleteDiscography(this.getAttribute('data-id'), this.parentNode.parentNode); };
+    }
+
+    let discography_list = document.querySelectorAll('.disc-item img');
+
+    if (discography_list) {
+        console.log(discography_list);
+
+        for (let i = 0; i < discography_list.length; i++) {
+            /* console.log(discography_list[i].offsetWidth); */
+
+            discography_list[i].style.height = discography_list[i].offsetWidth + 'px';
+
+            if ((i + 1) % 5 == 0) {
+                console.log('here');
+                console.log(discography_list[i]);
+                discography_list[i].parentNode.style.paddingRight = "0px";
+            }
+
+        }
+    }
+    
     return json.count;
 }
 
