@@ -37,7 +37,6 @@ router.get('/logout', (req, res) => {
 
 
 router.post('/upload', ensureAuthenticated, (req, res) => {
-    console.log(req.body);
     if (req.files) {
         
         if (req.files.hasOwnProperty('cover') && req.files.hasOwnProperty('song')) {
@@ -118,9 +117,6 @@ router.post('/upload', ensureAuthenticated, (req, res) => {
 
 router.post('/spotify', ensureAuthenticated, async (req, res) => {
     let {id} = req.body;
-    console.log(id);
-
-    
 
     let encodedKey = encodeURIComponent('grant_type');
     let encodedValue = encodeURIComponent('client_credentials');
@@ -137,8 +133,6 @@ router.post('/spotify', ensureAuthenticated, async (req, res) => {
         });
         
         const obj = response.data;
-        
-        console.log(obj);
 
         const track = await axios.get(`https://api.spotify.com/v1/tracks/${id}`, {
             headers: {
@@ -148,7 +142,6 @@ router.post('/spotify', ensureAuthenticated, async (req, res) => {
 
         res.json({imgUrl: track.data.album.images[0].url, songName: track.data.name, songArtists: track.data.artists,  status: 'ok'});
     } catch (e) {
-        console.log(e);
         res.json({status: 'error'});
     }
     
@@ -158,7 +151,6 @@ router.post('/spotify', ensureAuthenticated, async (req, res) => {
 })
 
 router.post('/upload/disc', ensureAuthenticated, async (req, res) => {
-    console.log('here', req.body);
 
     const { discName, discSpotifyId, discArtists, discCoverUrl } = req.body;
 
@@ -172,68 +164,12 @@ router.post('/upload/disc', ensureAuthenticated, async (req, res) => {
         res.json({msg: 'Discography Successfully uploaded', status: 'ok'});   
     }
 
-    /* if (req.files) {
-        
-        if (req.files.hasOwnProperty('cover')) {
-
-            if (req.files.cover.mimetype === 'image/gif' || req.files.cover.mimetype === 'image/png' || req.files.cover.mimetype === 'image/jpeg') {
-
-                const discCover = req.files.cover;
-
-                const { discName, discSpotify } = req.body;
-
-                const newDisc = new Discography({ discName, discSpotify, discCoverPath: ''});
-
-                let discCoverPath = '/discography/' + newDisc._id.toString() + '/' + discCover.name;
-                let directoryPath = path.join(__dirname, '..', 'public', 'discography', newDisc._id.toString());
-                let discCoverUploadPath = path.join(directoryPath, discCover.name);
-
-                newDisc.discCoverPath = discCoverPath;
-
-                console.log(newDisc);
-
-                fs.mkdir(directoryPath, (err) => {
-                    if (err) {
-                        console.log(err);
-                        req.flash('discError', 'Error uploading discography, please try again');
-                        res.redirect('/admin');
-                    }
-
-                    discCover.mv(discCoverUploadPath, async (err) => {
-                        if (err) {
-                            console.log(err);
-                            req.flash('discError', 'Error uploading cover');
-                        } else {
-                            const disc = await newDisc.save();
-                            req.flash('discSuccess', 'Files uploaded successfully');
-                        }
-                        res.redirect('/admin');
-                    })
-                })
-                
-            } else {
-                req.flash('discError', 'Incorrect image format. Supported formats include .gif, .png, .jpg');
-                res.redirect('/admin');
-            }
-
-        } else {
-            req.flash('discError', 'Files not selected.');
-            res.redirect('/admin');
-        }
-
-    } else {
-        req.flash('discError', 'Files not selected.');
-        res.redirect('/admin');
-    } */
+    
 });
 
 router.delete('/delete/:id', deleteAuthenticate, async (req, res) => {
-    console.log(req.params.id);
     const _id = req.params.id;
     const track = await Track.findOne({_id});
-
-    console.log(track);
-
     if (!track) {
         res.json({msg: "This resource does not exist", status:'err'});
     } else {
@@ -252,15 +188,11 @@ router.delete('/delete/:id', deleteAuthenticate, async (req, res) => {
         
     }
 
-
 });
 
 router.delete('/discography/delete/:id', deleteAuthenticate, async (req, res) => {
-    console.log(req.params.id);
     const _id = req.params.id;
     const discography = await Discography.findOne({_id});
-
-    console.log(discography);
 
     if (!discography) {
         res.json({msg: "This resource does not exist", status: "err"});
@@ -281,13 +213,8 @@ router.delete('/discography/delete/:id', deleteAuthenticate, async (req, res) =>
 });
 
 router.patch('/update-available/:id', deleteAuthenticate, async (req, res) => {
-    console.log(req.params.id);
     const _id = req.params.id;
-
     const track = await Track.findOne({_id});
-
-    console.log(track);
-
     track.isAvailable = !track.isAvailable;
     await track.save();
     res.json({track, status: 'ok'});
