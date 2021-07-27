@@ -15,6 +15,10 @@ let isMuted = false;
 
 let updateTimer;
 
+/* On page load, set volume to half */
+current_track.volume = 0.5;
+volume_slider.value = 50;
+
 /* Update state (play/pause) of the current track and update icons */
 let setPlayState = (id) => {
 
@@ -175,8 +179,8 @@ let setPlayer = (song, node) => {
 
     isPlaying = true;
 
-    current_track.volume = 0.5;
-    volume_slider.value = 50;
+    
+    
 
     updateTimer = setInterval(seekUpdate, 100);
 }

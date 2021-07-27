@@ -1249,8 +1249,6 @@ textarea {
         height: 100%;
         width: 100%;
         font-size: 1rem;
-        
-        
     }
 
     .player-volume {
@@ -1269,7 +1267,6 @@ textarea {
     
 
     .player-title {
-        
         padding-left: 20px;
         white-space: nowrap;
         overflow: hidden;
