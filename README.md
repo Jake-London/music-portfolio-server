@@ -38,6 +38,7 @@ API keys not included in repository
 - Custom Admin Dashboard
 - Audio/Image File Uploads
 - Customized Audio Player
+- Spotify API Integration
 - Mobile Friendly/Responsive
 - Contact Form w/ Automated Emails
 
